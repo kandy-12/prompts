@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{계정명}</title>
+<style>
+  :root {
+    --slate: #4a5568;
+    --slate-dark: #2d3748;
+    --pale: #e8eaed;
+    --pale-line: #c7ccd4;
+    --white: #f7f8f9;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--pale);
+    color: var(--slate-dark);
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ── 공통 블록 ── */
+  .block {
+    background-color: var(--white);
+    border: 1px solid var(--pale-line);
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+
+  .block .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--white);
+    background-color: var(--slate);
+    border-radius: 6px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .block .content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--slate-dark);
+  }
+
+  /* ── 프로필 블록: 원형 사진 + 옆 짧은 설명 ── */
+  .profile-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .photo-slot {
+    flex-shrink: 0;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background-color: var(--pale);
+    border: 1px solid var(--pale-line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate);
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    overflow: hidden;
+  }
+
+  .photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none; /* 이미지 삽입 시 style="display:block" 으로 변경 */
+  }
+
+  .profile-text {
+    flex: 1;
+  }
+
+  .profile-text .label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--slate);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .profile-text .name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--slate-dark);
+    margin-bottom: 6px;
+  }
+
+  .profile-text .content {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── 호불호 블록 ── */
+  .likes-dislikes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .likes-dislikes .col {
+    background-color: var(--pale);
+    border-radius: 12px;
+    padding: 14px;
+    min-height: 220px;
+  }
+
+  .likes-dislikes .col-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--slate);
+    margin-bottom: 8px;
+  }
+
+  .likes-dislikes .content {
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+
+  /* ── 검색바 ── */
+  .search-block {
+    display: flex;
+    gap: 8px;
+  }
+
+  .search-block input {
+    flex: 1;
+    border: 1px solid var(--pale-line);
+    border-radius: 10px;
+    background-color: var(--pale);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--slate-dark);
+    outline: none;
+  }
+
+  .search-block input::placeholder {
+    color: var(--slate);
+  }
+
+  .search-block button {
+    border: none;
+    border-radius: 10px;
+    background-color: var(--slate);
+    color: var(--white);
+    padding: 10px 16px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+
+  /* ── 집 배경 (3:4) ── */
+  .house-slot {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 12px;
+    background-color: var(--pale);
+    border: 1px solid var(--pale-line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate);
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  .house-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none; /* 이미지 삽입 시 style="display:block" 으로 변경 */
+  }
+
+  /* ── 사진 갤러리 (가로 스크롤, 3:5) ── */
+  .gallery-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 4px;
+  }
+
+  .gallery-scroll .photo-item {
+    flex: 0 0 auto;
+    width: 132px;
+    aspect-ratio: 3 / 5;
+    border-radius: 12px;
+    background-color: var(--pale);
+    border: 1px solid var(--pale-line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate);
+    font-size: 11px;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+
+  .gallery-scroll .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none; /* 이미지 삽입 시 style="display:block" 으로 변경 */
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- 검색바: 특정 단어 입력 시 지정된 페이지로 이동 -->
+  <div class="block search-block">
+    <input type="text" id="searchInput" placeholder="{검색어 입력}">
+    <button onclick="handleSearch()">GO</button>
+  </div>
+
+  <!-- 프로필 블록: 원형 사진 + 이름 + 짧은 소개 -->
+  <div class="block profile-block">
+    <div class="photo-slot">
+      <!-- 이미지 삽입 시: <img src="{이미지 경로}" style="display:block"> -->
+      {사진}
+    </div>
+    <div class="profile-text">
+      <div class="label">Profile</div>
+      <div class="name">{계정명 / 캐릭터명}</div>
+      <div class="content">{프로필 짧은 설명}</div>
+    </div>
+  </div>
+
+  <!-- 직업 설명란 -->
+  <div class="block">
+    <div class="tag">Occupation</div>
+    <div class="content">{직업 설명}</div>
+  </div>
+
+  <!-- 집 배경 (3:4) -->
+  <div class="block">
+    <div class="tag">Home</div>
+    <div class="house-slot">
+      <!-- 이미지 삽입 시: <img src="{집 배경 이미지 경로}" style="display:block"> -->
+      {집 배경 사진}
+    </div>
+  </div>
+
+  <!-- 호불호 설명란 -->
+  <div class="block">
+    <div class="tag">Likes / Dislikes</div>
+    <div class="likes-dislikes">
+      <div class="col">
+        <div class="col-label">LIKE</div>
+        <div class="content">{좋아하는 것}</div>
+      </div>
+      <div class="col">
+        <div class="col-label">DISLIKE</div>
+        <div class="content">{싫어하는 것}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 사진 갤러리 (가로 스크롤, 5장, 3:5) -->
+  <div class="block">
+    <div class="tag">Gallery</div>
+    <div class="gallery-scroll">
+      <div class="photo-item"><!-- <img src="{사진1 경로}" style="display:block"> -->{사진1}</div>
+      <div class="photo-item"><!-- <img src="{사진2 경로}" style="display:block"> -->{사진2}</div>
+      <div class="photo-item"><!-- <img src="{사진3 경로}" style="display:block"> -->{사진3}</div>
+      <div class="photo-item"><!-- <img src="{사진4 경로}" style="display:block"> -->{사진4}</div>
+      <div class="photo-item"><!-- <img src="{사진5 경로}" style="display:block"> -->{사진5}</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // 특정 단어 입력 시 이동할 페이지를 여기에 등록하세요.
+  // 예: "about" 입력 시 about.html 로 이동
+  const searchRoutes = {
+    "{키워드1}": "{이동할 페이지 주소1}",
+    "{키워드2}": "{이동할 페이지 주소2}"
+  };
+
+  function handleSearch() {
+    const value = document.getElementById('searchInput').value.trim();
+    if (searchRoutes[value]) {
+      window.location.href = searchRoutes[value];
+    } else {
+      alert('일치하는 페이지가 없습니다.');
+    }
+  }
+
+  document.getElementById('searchInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleSearch();
+  });
+</script>
+
+</body>
+</html>

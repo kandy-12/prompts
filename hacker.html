@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{계정명} :: unverified</title>
+<style>
+  :root {
+    --slate: #8b95a5;
+    --slate-light: #b8c0cc;
+    --bg-dark: #232a35;
+    --panel-dark: #2b3340;
+    --line-dark: #3a4453;
+    --text-pale: #e2e5ea;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-pale);
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .block {
+    background-color: var(--panel-dark);
+    border: 1px solid var(--line-dark);
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+
+  .block .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--bg-dark);
+    background-color: var(--slate-light);
+    border-radius: 6px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
+  }
+
+  .block .content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-pale);
+  }
+
+  /* ── 경고 라벨 ── */
+  .warning-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border: 1px solid var(--line-dark);
+  }
+
+  .warning-block .warn-text {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--slate-light);
+  }
+
+  .warning-block .warn-id {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--slate);
+  }
+
+  /* ── CLAIMED / ACTUAL 대비 블록 ── */
+  .contrast-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .contrast-block .col {
+    background-color: var(--bg-dark);
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  .contrast-block .col-label {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--slate);
+    margin-bottom: 8px;
+  }
+
+  .contrast-block .content {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ── 활동 로그 ── */
+  .log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .log-list .log-item {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .log-list .log-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .log-list .log-marker {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--slate);
+    flex-shrink: 0;
+  }
+
+  /* ── 독백 문구 ── */
+  .monologue-block {
+    text-align: left;
+  }
+
+  .monologue-block .content {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--slate-light);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- 경고 라벨 -->
+  <div class="warning-block">
+    <span class="warn-text">UNVERIFIED ACCESS</span>
+    <span class="warn-id">{계정명}</span>
+  </div>
+
+  <!-- CLAIMED / ACTUAL 대비 블록 -->
+  <div class="block">
+    <div class="tag">Surface vs Actual</div>
+    <div class="contrast-block">
+      <div class="col">
+        <div class="col-label">CLAIMED</div>
+        <div class="content">{표면 설정 - 예: 프리랜서 개발자}</div>
+      </div>
+      <div class="col">
+        <div class="col-label">ACTUAL</div>
+        <div class="content">{실제 설정 - 예: 그레이 햇}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 활동 로그 -->
+  <div class="block">
+    <div class="tag">Activity Log</div>
+    <div class="log-list">
+      <div class="log-item">
+        <span class="log-marker">›</span>
+        <span class="content">{로그 항목 1 - 예: 의뢰 수락, 정식 계약}</span>
+      </div>
+      <div class="log-item">
+        <span class="log-marker">›</span>
+        <span class="content">{로그 항목 2 - 예: 무단 침투 후 수정만 하고 퇴장}</span>
+      </div>
+      <div class="log-item">
+        <span class="log-marker">›</span>
+        <span class="content">{로그 항목 3 - 예: 선을 넘는 의뢰 거절}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 독백 문구 -->
+  <div class="block monologue-block">
+    <div class="tag">Note</div>
+    <div class="content">{캐릭터 독백 한 줄}</div>
+  </div>
+
+</div>
+
+</body>
+</html>
